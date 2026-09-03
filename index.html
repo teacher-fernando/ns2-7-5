@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Animal Habitats — Pro Edition</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
 <style>
 :root{--blue:#159ee8;--purple:#783ff0;--pink:#ef3f91;--green:#20bd68;--orange:#ff9228;--ink:#26334d;--red:#e53e3e;--gray:#cbd5e1;--dark-gray:#475569}
 *{box-sizing:border-box}
@@ -78,7 +84,7 @@ button{font:inherit}
 .game-desc{color:var(--dark-gray);font-size:14px;font-weight:700;margin:0;}
 .back-btn{background:var(--dark-gray);color:#fff;border:4px solid #fff;border-radius:20px;padding:10px 20px;font-weight:900;font-size:16px;cursor:pointer;margin-bottom:15px;display:inline-block;}
 
-/* GAME 1: DETECTIVE (TILES) */
+/* GAME 1: DETECTIVE */
 .detective-box{position:relative;background:#fff;border:6px solid #fff;border-radius:40px;width:350px;height:350px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px rgba(0,0,0,.2);overflow:hidden;}
 .detective-art{font-size:200px;filter:drop-shadow(0 10px 5px rgba(0,0,0,.15));}
 .tiles-overlay{position:absolute;top:0;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5, 1fr);grid-template-rows:repeat(5, 1fr);}
@@ -110,9 +116,23 @@ button{font:inherit}
 .btn-blue{background:var(--blue);}
 .btn-purple{background:var(--purple);}
 
+/* GAME 5: AIR WRITER STYLES */
+.air-container{position:relative;width:100%;max-width:640px;margin:0 auto;border-radius:25px;overflow:hidden;border:6px solid #fff;box-shadow:0 8px rgba(0,0,0,0.2);aspect-ratio:4/3;background:#000;}
+.air-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
+.air-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;}
+.air-draw-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none;}
+.air-word{font-size:35px;text-align:center;font-weight:900;color:var(--ink);margin-bottom:5px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
+.air-letter-box {display:inline-block; width:44px; text-align:center; border-bottom:4px solid var(--gray); margin:0 3px; color:var(--orange); transition:0.3s;}
+.air-letter-box.active {border-color:var(--pink); color:var(--pink); transform:scale(1.2);}
+.air-letter-box.done {border-color:var(--green); color:var(--green);}
+.air-instructions{text-align:center;font-size:18px;font-weight:700;color:var(--dark-gray);margin-bottom:15px;background:#e2e8f0;border-radius:15px;padding:10px;display:inline-block;}
+.air-loading{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;font-size:24px;font-weight:900;text-align:center;padding:20px;}
+.loader-spinner {border: 6px solid #f3f3f3;border-top: 6px solid var(--orange);border-radius: 50%;width: 50px;height: 50px;animation: spin 1s linear infinite;margin-bottom:15px;}
+
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{50%{transform:scale(1.04)}}
 @keyframes shake {10%,90%{transform:translate3d(-1px,0,0)}20%,80%{transform:translate3d(2px,0,0)}30%,50%,70%{transform:translate3d(-4px,0,0)}40%,60%{transform:translate3d(4px,0,0)}}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
 @media(max-width:900px){.cards{grid-template-columns:1fr}.arrow{transform:rotate(90deg);font-size:48px}}
 @media(max-width:600px){.app{padding:7px}.workspace{padding:10px}.options{grid-template-columns:repeat(2,1fr)}.art{font-size:90px}.card{height:220px}.chunk{font-size:26px;padding:10px 20px;}.icon-btn{width:60px;height:60px;font-size:26px;}.detective-box{width:280px;height:280px;}.detective-art{font-size:150px;}.box-art{font-size:130px;}}
@@ -130,9 +150,7 @@ button{font:inherit}
 <button class="nav-tab" onclick="switchMainView('games')">🎮 GAMES</button>
 </nav>
 
-<!-- ==========================================
-QUIZ MODE
-=========================================== -->
+<!-- QUIZ MODE -->
 <main class="workspace view-section active" id="view-quiz">
 <section class="sentence-container">
 <div class="sentence" id="sentenceBox">
@@ -169,41 +187,43 @@ QUIZ MODE
 <div class="note">The microphone is locked until you find the correct habitat.</div>
 </main>
 
-<!-- ==========================================
-GAMES MENU
-=========================================== -->
+<!-- GAMES MENU -->
 <main class="view-section" id="view-games">
 <div class="games-grid">
-<!-- Game 1 -->
 <div class="game-card" onclick="startGame('detective')">
 <div class="game-icon">🕵️</div>
 <h2 class="game-title">Animal Detective</h2>
 <p class="game-desc">The animal is hidden behind blocks! Reveal them slowly while the kids guess.</p>
 </div>
-<!-- Game 2 -->
 <div class="game-card" onclick="startGame('tf')">
 <div class="game-icon">🤪</div>
 <h2 class="game-title">Silly Teacher</h2>
 <p class="game-desc">True or False? Check if the generated sentence makes sense.</p>
 </div>
-<!-- Game 3 -->
 <div class="game-card" onclick="startGame('box')">
 <div class="game-icon">📦</div>
 <h2 class="game-title">Mystery Box</h2>
 <p class="game-desc">3 Clues! Listen and guess who is hiding inside the box.</p>
 </div>
-<!-- Game 4 -->
 <div class="game-card" onclick="startGame('bomb')">
 <div class="game-icon">⏱️</div>
 <h2 class="game-title">Time Bomb</h2>
 <p class="game-desc">Quick! Find the right habitat before the time runs out!</p>
 </div>
+<div class="game-card" onclick="startGame('air')">
+<div class="game-icon">✍️</div>
+<h2 class="game-title">Air Writer</h2>
+<p class="game-desc">Lift your index finger to write letters in the air!</p>
+</div>
+<div class="game-card" onclick="startGame('repeat')">
+<div class="game-icon">🎧</div>
+<h2 class="game-title">Listen & Repeat</h2>
+<p class="game-desc">Listen to the animal sentence and repeat it into the mic for a star score!</p>
+</div>
 </div>
 </main>
 
-<!-- ==========================================
-GAME 1: DETECTIVE (TILES)
-=========================================== -->
+<!-- GAME 1: DETECTIVE -->
 <main class="workspace view-section" id="game-detective">
 <button class="back-btn" onclick="switchMainView('games')">⬅️ Back to Games</button>
 <div class="detective-box" id="detBox">
@@ -217,9 +237,7 @@ GAME 1: DETECTIVE (TILES)
 <div class="logic-feedback" id="detFeedback" style="margin-top:20px;"></div>
 </main>
 
-<!-- ==========================================
-GAME 2: TRUE OR FALSE (SILLY TEACHER)
-=========================================== -->
+<!-- GAME 2: TRUE OR FALSE -->
 <main class="workspace view-section" id="game-tf">
 <button class="back-btn" onclick="switchMainView('games')">⬅️ Back to Games</button>
 <section class="cards" style="margin-top:10px;">
@@ -244,9 +262,7 @@ GAME 2: TRUE OR FALSE (SILLY TEACHER)
 </div>
 </main>
 
-<!-- ==========================================
-GAME 3: MYSTERY BOX (3 CLUES)
-=========================================== -->
+<!-- GAME 3: MYSTERY BOX -->
 <main class="workspace view-section" id="game-box">
 <button class="back-btn" onclick="switchMainView('games')">⬅️ Back to Games</button>
 <div class="mystery-box-container">
@@ -260,9 +276,7 @@ GAME 3: MYSTERY BOX (3 CLUES)
 </div>
 </main>
 
-<!-- ==========================================
-GAME 4: TIME BOMB
-=========================================== -->
+<!-- GAME 4: TIME BOMB -->
 <main class="workspace view-section" id="game-bomb">
 <button class="back-btn" onclick="bombEndGame(false)">⬅️ Quit Game</button>
 <div class="bomb-header">
@@ -279,6 +293,72 @@ GAME 4: TIME BOMB
 </div>
 <div style="display:flex;justify-content:center;margin-top:20px;">
 <button class="next-btn" id="bombStartBtn" onclick="bombStart()">🚀 START GAME</button>
+</div>
+</main>
+
+<!-- GAME 5: AIR WRITER -->
+<main class="workspace view-section" id="game-air">
+<button class="back-btn" onclick="switchMainView('games')">⬅️ Quit Game</button>
+<div style="text-align:center;">
+<div class="air-word" id="airWordPrompt"></div>
+<div class="air-instructions">Lift your index finger to write letters from left to right!</div>
+<div id="airStars" style="font-size: 40px; margin-bottom: 10px; display: none;"></div>
+<div id="airFeedback" class="logic-feedback"></div>
+<div id="airProgressContainer" style="width: 100%; max-width: 640px; margin: 10px auto 15px; height: 15px; background: #e2e8f0; border-radius: 8px; overflow: hidden; border: 3px solid #fff;">
+    <div id="airProgressFill" style="width: 0%; height: 100%; background: var(--green); transition: 0.3s;"></div>
+</div>
+</div>
+<div class="air-container">
+<div class="air-loading" id="airLoading">
+    <div class="loader-spinner"></div>
+    Loading Camera & AI Model...<br>Please allow camera access.
+</div>
+<video id="airVideo" class="air-video" autoplay playsinline muted></video>
+<canvas id="guideCanvas" class="air-canvas" style="z-index:0;"></canvas>
+<canvas id="airCanvas" class="air-canvas" style="z-index:1;"></canvas>
+<canvas id="drawCanvas" class="air-draw-canvas" style="z-index:2;"></canvas>
+</div>
+<div class="game-controls" style="margin-top:20px;">
+<button class="btn-action" onclick="clearAirCanvas()" style="background:var(--red);">🗑️ CLEAR</button>
+<button class="btn-action" id="airDoneBtn" onclick="checkAirLetter()" style="background:var(--green);">✅ DONE</button>
+<button class="btn-action" onclick="nextAirWord()" style="background:var(--purple);">⏭️ NEW WORD</button>
+</div>
+</main>
+
+<!-- GAME 6: LISTEN & REPEAT -->
+<main class="workspace view-section" id="game-repeat">
+<button class="back-btn" onclick="switchMainView('games')">⬅️ Back to Games</button>
+<div style="text-align:center; font-size:26px; font-weight:900; margin-bottom:15px; color:var(--purple);">🎧 LISTEN & REPEAT</div>
+
+<section class="cards" style="margin-top:10px;">
+<div class="card person-card"><div class="art" id="repeatAnimalArt">🐻</div><div class="label" id="repeatAnimalName">The bear</div></div>
+<div class="arrow">➜</div>
+<div class="card home-card"><div class="art" id="repeatHabitatArt">🌲</div><div class="label" id="repeatHabitatName">WOODS</div></div>
+</section>
+
+<section class="sentence-container">
+<div class="sentence" id="repeatSentenceBox">
+<span class="chunk subject" id="repeatSubject">The bear</span>
+<span class="chunk middle">lives in the</span>
+<span class="chunk place" id="repeatPlace">woods</span>
+</div>
+</section>
+
+<div class="icon-controls" style="margin-bottom:15px;">
+<button class="icon-btn play" onclick="repeatListenTarget()" title="Listen">🔊</button>
+<button class="icon-btn say" id="repeatMicBtn" onclick="toggleRepeatRecord()" title="Speak">🎙️</button>
+</div>
+
+<div id="repeatFeedback" class="feedback" style="margin: 0 auto 15px;">Tap 🔊 to listen, then tap 🎙️ and repeat the sentence!</div>
+
+<div id="repeatScoreContainer" style="display:none; text-align:center; background:#fff; border:4px solid #fff; border-radius:20px; padding:15px; margin:0 auto 15px; max-width:800px; box-shadow:0 6px rgba(0,0,0,0.1);">
+<div id="repeatStars" style="font-size:36px; margin-bottom:8px;">⭐⭐⭐⭐⭐</div>
+<div id="repeatAccuracyText" style="font-size:22px; font-weight:900; color:var(--purple);">Accuracy: 100%</div>
+<div id="repeatHeardText" style="font-size:16px; font-weight:700; color:var(--dark-gray); margin-top:5px;">Heard: ""</div>
+</div>
+
+<div style="display:flex;justify-content:center;">
+<button class="next-btn" id="repeatNextBtn" style="display:none;" onclick="repeatNextRound()">🎲 NEXT SENTENCE</button>
 </div>
 </main>
 
@@ -311,12 +391,17 @@ const habitats = [
 {id:"jungle", emoji:"🌴", name:"JUNGLE"},
 {id:"woods", emoji:"🌲", name:"WOODS"},
 {id:"city", emoji:"🏙️", name:"CITY"},
-{id:"country", emoji:"🏞️", name:"COUNTRY"}
+{id:"country", emoji:"🏞️", name:"COUNTRY"},
+{id:"house", emoji:"🏠", name:"HOUSE"},
+{id:"apartment", emoji:"🏢", name:"APARTMENT"},
+{id:"cave", emoji:"⛰️", name:"CAVE"},
+{id:"boat", emoji:"⛵", name:"BOAT"},
+{id:"castle", emoji:"🏰", name:"CASTLE"},
+{id:"trailer", emoji:"🚐", name:"TRAILER"}
 ];
 
 const $ = id => document.getElementById(id);
 
-// --- NAVIGATION ---
 function switchMainView(viewId) {
 document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
 if(viewId === 'quiz') document.querySelectorAll('.nav-tab')[0].classList.add('active');
@@ -324,6 +409,8 @@ if(viewId === 'games') document.querySelectorAll('.nav-tab')[1].classList.add('a
 hideAllViews();
 $('view-' + viewId).classList.add('active');
 bombEndGame(true);
+stopAirGame();
+stopRepeatRecording();
 }
 
 function hideAllViews() {
@@ -337,6 +424,8 @@ if(gameId === 'detective') detNext();
 if(gameId === 'tf') tfNext();
 if(gameId === 'box') boxNext();
 if(gameId === 'bomb') bombInit();
+if(gameId === 'air') initAirGame();
+if(gameId === 'repeat') repeatInitRound();
 }
 
 function shuffle(array) {
@@ -348,9 +437,7 @@ const j = Math.floor(Math.random() * (i + 1));
 return arr;
 }
 
-// ==========================================
-// QUIZ MODE LOGIC
-// ==========================================
+// QUIZ LOGIC
 let animalDeck = [];
 let currentAnimal = null;
 let currentHabitat = null; 
@@ -532,9 +619,7 @@ $("playButton").addEventListener("click", playRecording);
 
 startNextQuestion(); setupRecognition();
 
-// ==========================================
-// GAME 1: DETECTIVE LOGIC (TILES)
-// ==========================================
+// GAME 1: DETECTIVE
 let detAnimal = null;
 let detTilesArray = [];
 
@@ -545,7 +630,7 @@ $('detArt').textContent = detAnimal.emoji;
 const overlay = $('detTiles');
 overlay.innerHTML = '';
 detTilesArray = [];
-for(let i=0; i<25; i++) { // 5x5 grid
+for(let i=0; i<25; i++) {
 const t = document.createElement('div');
 t.className = 'tile';
 overlay.appendChild(t);
@@ -562,7 +647,7 @@ const unrevealed = detTilesArray.filter(t => !t.classList.contains('hidden'));
 if (unrevealed.length === 0) return;
 
 const shuffled = shuffle(unrevealed);
-const toReveal = shuffled.slice(0, 5); // Reveal 5 blocks per click
+const toReveal = shuffled.slice(0, 5);
 toReveal.forEach(t => t.classList.add('hidden'));
 
 const remaining = detTilesArray.filter(t => !t.classList.contains('hidden'));
@@ -577,9 +662,7 @@ speak("Let's reveal more!");
 }
 }
 
-// ==========================================
-// GAME 2: SILLY TEACHER (TRUE/FALSE)
-// ==========================================
+// GAME 2: TRUE OR FALSE
 let tfCurrentAnimal = null;
 let tfCurrentHabitat = null;
 let tfIsTrue = false;
@@ -628,9 +711,7 @@ $('tfSentenceBox').classList.add("wrong-shake");
 }
 }
 
-// ==========================================
-// GAME 3: MYSTERY BOX (3 CLUES)
-// ==========================================
+// GAME 3: MYSTERY BOX
 let boxAnimal = null;
 let boxCurrentClue = 1;
 
@@ -663,7 +744,7 @@ $('btnHearClue').innerHTML = "🔊 HEAR FINAL CLUE";
 } 
 else {
 textToSpeak = boxAnimal.clues[1] + " Who am I?";
-$('btnHearClue').style.display = "none"; // Hide after last clue
+$('btnHearClue').style.display = "none";
 }
 
 $('boxFeedback').innerHTML = `💬 "${textToSpeak}"`;
@@ -684,9 +765,7 @@ $('boxFeedback').className = "logic-feedback logic-correct";
 speak(boxAnimal.name);
 }
 
-// ==========================================
 // GAME 4: TIME BOMB
-// ==========================================
 let bombAnimal = null;
 let bombScore = 0;
 let bombTime = 100;
@@ -772,6 +851,549 @@ $('bombArt').textContent = "💥";
 }
 }
 
+// GAME 5: AIR WRITER
+let airHands = null;
+let airCamera = null;
+let airCtx = null;
+let drawCtx = null;
+let guideCtx = null;
+let isAirDrawing = false;
+let airLastX = 0;
+let airLastY = 0;
+let modelLoaded = false;
+
+let airCurrentWord = "";
+let airCurrentLetterIndex = 0;
+let airWordTotalScore = 0;
+
+async function stopAirGame() {
+    if (airCamera) {
+        try { await airCamera.stop(); } catch(e) {}
+        airCamera = null;
+    }
+    const videoElement = $('airVideo');
+    if (videoElement && videoElement.srcObject) {
+        const stream = videoElement.srcObject;
+        stream.getTracks().forEach(track => track.stop());
+        videoElement.srcObject = null;
+    }
+}
+
+async function initAirGame() {
+    $('airLoading').style.display = 'flex';
+    await stopAirGame();
+    await new Promise(r => setTimeout(r, 600));
+
+    const airCanvasElement = $('airCanvas');
+    const drawCanvasElement = $('drawCanvas');
+    const guideCanvasElement = $('guideCanvas');
+
+    if (airCanvasElement) {
+        airCanvasElement.width = 640;
+        airCanvasElement.height = 480;
+        airCtx = airCanvasElement.getContext('2d');
+    }
+    if (drawCanvasElement) {
+        drawCanvasElement.width = 640;
+        drawCanvasElement.height = 480;
+        drawCtx = drawCanvasElement.getContext('2d');
+        drawCtx.lineWidth = 14;
+        drawCtx.strokeStyle = "#ef3f91";
+        drawCtx.lineCap = "round";
+        drawCtx.lineJoin = "round";
+    }
+    if (guideCanvasElement) {
+        guideCanvasElement.width = 640;
+        guideCanvasElement.height = 480;
+        guideCtx = guideCanvasElement.getContext('2d');
+    }
+
+    nextAirWord();
+
+    if (!airHands) {
+        airHands = new Hands({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+        }});
+        
+        airHands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence: 0.7
+        });
+        
+        airHands.onResults(onAirHandsResults);
+    }
+
+    const videoElement = $('airVideo');
+    try {
+        airCamera = new Camera(videoElement, {
+            onFrame: async () => {
+                if (airHands && videoElement && videoElement.readyState >= 2) {
+                    await airHands.send({image: videoElement});
+                }
+            },
+            width: 640,
+            height: 480
+        });
+        await airCamera.start();
+    } catch(err) {
+        console.error("Camera start error:", err);
+        if (err.name === 'NotReadableError' || err.message.includes('Device in use')) {
+            $('airLoading').innerHTML = '<div class="loader-spinner"></div>Camera busy. Retrying in 1 second...';
+            await new Promise(r => setTimeout(r, 1000));
+            try {
+                await airCamera.start();
+                return;
+            } catch(retryErr) {
+                console.error("Retry failed:", retryErr);
+            }
+        }
+        $('airLoading').style.display = 'none';
+        $('airFeedback').innerHTML = "❌ Camera in use or blocked. Please refresh & allow access.";
+        $('airFeedback').className = "logic-feedback logic-wrong";
+    }
+}
+
+function onAirHandsResults(results) {
+    if(!modelLoaded) {
+        modelLoaded = true;
+        $('airLoading').style.display = 'none';
+    }
+
+    if(!airCtx) return;
+    airCtx.save();
+    airCtx.clearRect(0, 0, 640, 480);
+    
+    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+        const landmarks = results.multiHandLandmarks[0];
+        const indexTip = landmarks[8];
+        const indexPip = landmarks[6];
+        const middleTip = landmarks[12];
+        const middlePip = landmarks[10];
+        
+        const x = (1.0 - indexTip.x) * 640;
+        const y = indexTip.y * 480;
+
+        const mirroredLandmarks = landmarks.map(lm => ({
+            x: 1.0 - lm.x,
+            y: lm.y,
+            z: lm.z
+        }));
+
+        drawConnectors(airCtx, mirroredLandmarks, HAND_CONNECTIONS, {color: 'rgba(255,255,255,0.5)', lineWidth: 2});
+        drawLandmarks(airCtx, mirroredLandmarks, {color: '#159ee8', lineWidth: 1, radius: 4});
+
+        const isIndexUp = indexTip.y < indexPip.y;
+        const isMiddleDown = middleTip.y > middlePip.y;
+
+        if (isIndexUp && isMiddleDown) { 
+            airCtx.beginPath();
+            airCtx.arc(x, y, 12, 0, 2 * Math.PI);
+            airCtx.fillStyle = "#ff9228"; 
+            airCtx.fill();
+
+            if (!isAirDrawing) {
+                isAirDrawing = true;
+                airLastX = x; 
+                airLastY = y;
+            } else {
+                if(drawCtx) {
+                    drawCtx.beginPath();
+                    drawCtx.moveTo(airLastX, airLastY);
+                    drawCtx.lineTo(x, y);
+                    drawCtx.stroke();
+                }
+                airLastX = x; 
+                airLastY = y;
+            }
+        } else {
+            isAirDrawing = false;
+        }
+    } else {
+        isAirDrawing = false;
+    }
+    airCtx.restore();
+}
+
+function clearAirCanvas() {
+    if(drawCtx && airCurrentWord) {
+        const totalLetters = airCurrentWord.length;
+        const cellW = 640 / totalLetters;
+        const startX = airCurrentLetterIndex * cellW;
+        drawCtx.clearRect(startX, 0, cellW, 480);
+    }
+    const progressFill = $('airProgressFill');
+    if(progressFill) {
+        progressFill.style.width = '0%';
+    }
+    const feedbackEl = $('airFeedback');
+    if(feedbackEl) {
+        feedbackEl.innerHTML = "";
+        feedbackEl.className = "logic-feedback";
+    }
+}
+
+function nextAirWord() {
+    const randomHab = habitats[Math.floor(Math.random() * habitats.length)];
+    airCurrentWord = randomHab.name.toUpperCase();
+    airCurrentLetterIndex = 0;
+    airWordTotalScore = 0;
+    
+    if(drawCtx) {
+        drawCtx.clearRect(0, 0, 640, 480);
+    }
+
+    const feedbackEl = $('airFeedback');
+    if(feedbackEl) {
+        feedbackEl.innerHTML = "";
+        feedbackEl.className = "logic-feedback";
+    }
+    
+    const progressFill = $('airProgressFill');
+    if(progressFill) {
+        progressFill.style.width = "0%";
+    }
+
+    const starsEl = $('airStars');
+    if(starsEl) {
+        starsEl.style.display = "none";
+        starsEl.innerHTML = "";
+    }
+    
+    const doneBtn = $('airDoneBtn');
+    if(doneBtn) doneBtn.disabled = false;
+    
+    updateAirWordUI();
+    drawAirGuides();
+}
+
+function updateAirWordUI() {
+    let boxesHTML = "";
+    for(let i = 0; i < airCurrentWord.length; i++) {
+        let cls = "air-letter-box";
+        if (i < airCurrentLetterIndex) cls += " done";
+        else if (i === airCurrentLetterIndex) cls += " active";
+        boxesHTML += `<span class="${cls}" id="air-letter-${i}">${airCurrentWord[i]}</span>`;
+    }
+    $('airWordPrompt').innerHTML = boxesHTML;
+}
+
+function checkAirLetter() {
+    if (airCurrentLetterIndex >= airCurrentWord.length) return;
+
+    const letter = airCurrentWord[airCurrentLetterIndex];
+    const totalLetters = airCurrentWord.length;
+    const cellW = 640 / totalLetters;
+    const startX = airCurrentLetterIndex * cellW;
+    const targetCenterX = startX + (cellW / 2);
+    const targetCenterY = 240;
+
+    const maskCanvas = document.createElement('canvas');
+    maskCanvas.width = 640;
+    maskCanvas.height = 480;
+    const mCtx = maskCanvas.getContext('2d');
+    
+    const fontSize = Math.min(260, cellW * 1.3);
+    mCtx.strokeStyle = "#ffffff";
+    mCtx.lineWidth = 38;
+    mCtx.lineCap = "round";
+    mCtx.lineJoin = "round";
+    mCtx.font = `bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;
+    mCtx.textAlign = 'center';
+    mCtx.textBaseline = 'middle';
+    mCtx.strokeText(letter, targetCenterX, targetCenterY);
+
+    const maskData = mCtx.getImageData(0, 0, 640, 480).data;
+    const drawData = drawCtx.getImageData(0, 0, 640, 480).data;
+
+    let letterPixels = [];
+    for (let y = 0; y < 480; y += 4) {
+        for (let x = Math.floor(startX); x < Math.floor(startX + cellW); x += 4) {
+            const idx = (y * 640 + x) * 4;
+            if (maskData[idx + 3] > 128) {
+                letterPixels.push({x, y});
+            }
+        }
+    }
+
+    let userPixels = [];
+    let strayPixels = 0;
+    for (let y = 0; y < 480; y += 4) {
+        for (let x = 0; x < 640; x += 4) {
+            const idx = (y * 640 + x) * 4;
+            if (drawData[idx + 3] > 50) {
+                if (x >= startX && x < startX + cellW) {
+                    userPixels.push({x, y});
+                } else {
+                    strayPixels++;
+                }
+            }
+        }
+    }
+
+    const feedbackEl = $('airFeedback');
+    const progressFill = $('airProgressFill');
+
+    if (userPixels.length < 12) {
+        progressFill.style.width = '0%';
+        progressFill.style.background = 'var(--orange)';
+        feedbackEl.innerHTML = `❌ Please trace the letter ${letter} inside the column!`;
+        feedbackEl.className = "logic-feedback logic-wrong";
+        return;
+    }
+
+    let matchedUserPixels = 0;
+    userPixels.forEach(up => {
+        let found = false;
+        for (let lp of letterPixels) {
+            if (Math.hypot(up.x - lp.x, up.y - lp.y) <= 45) {
+                found = true;
+                break;
+            }
+        }
+        if (found) matchedUserPixels++;
+    });
+
+    let coveredLetterPixels = 0;
+    letterPixels.forEach(lp => {
+        let covered = false;
+        for (let up of userPixels) {
+            if (Math.hypot(up.x - lp.x, up.y - lp.y) <= 45) {
+                covered = true;
+                break;
+            }
+        }
+        if (covered) coveredLetterPixels++;
+    });
+
+    const recall = letterPixels.length > 0 ? (coveredLetterPixels / letterPixels.length) : 0;
+    const precision = userPixels.length > 0 ? (matchedUserPixels / userPixels.length) : 0;
+    const strayPenalty = Math.max(0, 1 - (strayPixels / 40));
+
+    let score = Math.round(((recall * 0.55) + (precision * 0.35) + (strayPenalty * 0.10)) * 100);
+    if (recall < 0.25 || precision < 0.20) {
+        score = Math.min(score, 45);
+    }
+
+    progressFill.style.width = score + '%';
+
+    if (score >= 68) {
+        airWordTotalScore += score;
+        progressFill.style.background = 'var(--green)';
+        feedbackEl.innerHTML = `✅ CORRECT: ${letter}!`;
+        feedbackEl.className = "logic-feedback logic-correct";
+        speak(letter);
+
+        airCurrentLetterIndex++;
+        updateAirWordUI();
+        progressFill.style.width = '0%';
+        drawAirGuides();
+
+        if (airCurrentLetterIndex >= airCurrentWord.length) {
+            $('airDoneBtn').disabled = true;
+            const avg = airWordTotalScore / airCurrentWord.length;
+            let starsHTML = avg > 85 ? "⭐⭐⭐⭐⭐" : avg > 72 ? "⭐⭐⭐⭐" : avg > 58 ? "⭐⭐⭐" : "⭐⭐";
+            feedbackEl.innerHTML = `🎉 AMAZING! You wrote ${airCurrentWord}!`;
+            $('airStars').style.display = "block";
+            $('airStars').innerHTML = starsHTML;
+            speak(airCurrentWord);
+        }
+    } else {
+        progressFill.style.background = 'var(--orange)';
+        feedbackEl.innerHTML = `❌ Trace closer to letter ${letter}! (${score}%)`;
+        feedbackEl.className = "logic-feedback logic-wrong";
+    }
+}
+
+function drawAirGuides() {
+    if(!guideCtx || !airCurrentWord) return;
+    guideCtx.clearRect(0, 0, 640, 480);
+    
+    const totalLetters = airCurrentWord.length;
+    const cellW = 640 / totalLetters;
+
+    if(airCurrentLetterIndex < totalLetters) {
+        const startX = airCurrentLetterIndex * cellW;
+        const letter = airCurrentWord[airCurrentLetterIndex];
+        const targetCenterX = startX + (cellW / 2);
+        const targetCenterY = 240;
+
+        guideCtx.fillStyle = "rgba(255, 255, 255, 0.15)";
+        guideCtx.fillRect(startX, 0, cellW, 480);
+
+        guideCtx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+        guideCtx.lineWidth = 4;
+        guideCtx.setLineDash([10, 10]);
+        guideCtx.beginPath();
+        guideCtx.arc(targetCenterX, targetCenterY, cellW * 0.42, 0, 2 * Math.PI);
+        guideCtx.stroke();
+        guideCtx.setLineDash([]);
+
+        const fontSize = Math.min(260, cellW * 1.3);
+        guideCtx.fillStyle = "rgba(255, 255, 255, 0.85)";
+        guideCtx.font = `bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;
+        guideCtx.textAlign = 'center';
+        guideCtx.textBaseline = 'middle';
+        guideCtx.fillText(letter, targetCenterX, targetCenterY);
+    }
+
+    guideCtx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+    guideCtx.lineWidth = 3;
+    guideCtx.setLineDash([12, 12]);
+    guideCtx.beginPath();
+    for(let i = 1; i < totalLetters; i++) {
+        guideCtx.moveTo(i * cellW, 0);
+        guideCtx.lineTo(i * cellW, 480);
+    }
+    guideCtx.stroke();
+    guideCtx.setLineDash([]);
+}
+
+// GAME 6: LISTEN & REPEAT LOGIC
+let repeatAnimal = null;
+let repeatHabitat = null;
+let repeatRec = null;
+let repeatRecognizing = false;
+let repeatTranscript = "";
+
+function repeatInitRound() {
+repeatAnimal = animals[Math.floor(Math.random() * animals.length)];
+let habId = repeatAnimal.correctHabitats[Math.floor(Math.random() * repeatAnimal.correctHabitats.length)];
+repeatHabitat = habitats.find(h => h.id === habId);
+
+$('repeatAnimalArt').textContent = repeatAnimal.emoji;
+$('repeatAnimalName').textContent = repeatAnimal.name;
+$('repeatHabitatArt').textContent = repeatHabitat.emoji;
+$('repeatHabitatName').textContent = repeatHabitat.name;
+$('repeatSubject').textContent = repeatAnimal.name;
+$('repeatPlace').textContent = repeatHabitat.id;
+
+$('repeatFeedback').innerHTML = "Tap 🔊 to listen, then tap 🎙️ and repeat the sentence!";
+$('repeatFeedback').className = "feedback";
+$('repeatScoreContainer').style.display = "none";
+$('repeatNextBtn').style.display = "none";
+repeatTranscript = "";
+}
+
+function getRepeatTargetSentence() {
+if(!repeatAnimal || !repeatHabitat) return "";
+return `${repeatAnimal.name} lives in the ${repeatHabitat.id}.`;
+}
+
+function repeatListenTarget() {
+speak(getRepeatTargetSentence());
+}
+
+function toggleRepeatRecord() {
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if(!SR) {
+$('repeatFeedback').innerHTML = "❌ Speech recognition not supported in this browser.";
+return;
+}
+
+if(repeatRecognizing) {
+if(repeatRec) { try { repeatRec.stop(); } catch(e){} }
+return;
+}
+
+repeatTranscript = "";
+repeatRec = new SR();
+repeatRec.lang = "en-US";
+repeatRec.continuous = false;
+repeatRec.interimResults = true;
+
+repeatRec.onresult = e => {
+let interim = "";
+for(let i = e.resultIndex; i < e.results.length; i++){
+const text = e.results[i][0].transcript;
+if(e.results[i].isFinal) repeatTranscript += " " + text; else interim += text;
+}
+const currentHeard = (repeatTranscript + " " + interim).trim();
+if(currentHeard) {
+$('repeatFeedback').innerHTML = `👂 Hearing: “${currentHeard}”`;
+}
+};
+
+repeatRec.onend = () => {
+repeatRecognizing = false;
+$('repeatMicBtn').classList.remove("recording");
+$('repeatMicBtn').innerHTML = "🎙️";
+evaluateRepeatScore();
+};
+
+try {
+repeatRec.start();
+repeatRecognizing = true;
+$('repeatMicBtn').classList.add("recording");
+$('repeatMicBtn').innerHTML = "⏹️";
+$('repeatFeedback').innerHTML = "🎤 Listening... Speak clearly!";
+} catch(e) {
+repeatRecognizing = false;
+$('repeatMicBtn').classList.remove("recording");
+$('repeatMicBtn').innerHTML = "🎙️";
+}
+}
+
+function stopRepeatRecording() {
+if(repeatRecognizing && repeatRec) {
+try { repeatRec.stop(); } catch(e){}
+}
+}
+
+function evaluateRepeatScore() {
+const target = normalize(getRepeatTargetSentence());
+const heard = normalize(repeatTranscript);
+
+if(!heard) {
+$('repeatFeedback').innerHTML = "🎤 No speech detected. Try again!";
+$('repeatFeedback').className = "feedback bad";
+return;
+}
+
+const tw = target.split(" ");
+const hw = heard.split(" ");
+let matches = 0;
+tw.forEach((w, i) => {
+if(hw[i] === w) matches++;
+});
+
+// Calculate percentage match
+let pct = Math.round((matches / tw.length) * 100);
+if(heard === target) pct = 100;
+
+// Determine stars
+let stars = 1;
+if(pct >= 90) stars = 5;
+else if(pct >= 75) stars = 4;
+else if(pct >= 50) stars = 3;
+else if(pct >= 25) stars = 2;
+
+let starsHTML = "";
+for(let i=0; i<5; i++) {
+starsHTML += (i < stars) ? "⭐" : "☆";
+}
+
+$('repeatStars').innerHTML = starsHTML;
+$('repeatAccuracyText').innerHTML = `Accuracy: ${pct}%`;
+$('repeatHeardText').innerHTML = `Heard: “${repeatTranscript.trim()}”`;
+$('repeatScoreContainer').style.display = "block";
+$('repeatNextBtn').style.display = "flex";
+
+if(pct >= 75) {
+$('repeatFeedback').innerHTML = `🎉 AMAZING PRONUNCIATION!`;
+$('repeatFeedback').className = "feedback good";
+speak("Wonderful job!");
+} else {
+$('repeatFeedback').innerHTML = `💡 GOOD TRY! Listen again and practice!`;
+$('repeatFeedback').className = "feedback bad";
+speak("Good try!");
+}
+}
+
+function repeatNextRound() {
+repeatInitRound();
+}
 </script>
 </body>
 </html>
