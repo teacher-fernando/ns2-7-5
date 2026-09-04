@@ -116,6 +116,176 @@ button{font:inherit}
 .btn-blue{background:var(--blue);}
 .btn-purple{background:var(--purple);}
 
+
+/* AIR WRITER PRO */
+.air-status-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:10px auto;max-width:640px}
+.air-score-card{background:#fff;border:3px solid #fff;border-radius:16px;min-width:130px;padding:7px 14px;box-shadow:0 4px rgba(0,0,0,.12)}
+.air-score-card span{display:block;font-size:11px;font-weight:900;color:var(--dark-gray)}
+.air-score-card strong{font-size:19px;color:var(--purple)}
+.air-meter-label{display:flex;justify-content:space-between;gap:12px;max-width:640px;margin:8px auto 4px;font-size:13px;font-weight:900;color:var(--dark-gray)}
+.air-progress-shell{width:100%;max-width:640px;margin:0 auto 9px;height:22px;background:#e2e8f0;border-radius:12px;overflow:hidden;border:3px solid #fff;box-shadow:inset 0 2px 4px rgba(0,0,0,.08)}
+.air-progress-fill{width:0%;height:100%;background:var(--orange);transition:width .18s ease,background .25s}
+.air-criteria{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;max-width:700px;margin:0 auto 8px}
+.criteria-chip{font-size:11px;font-weight:900;padding:5px 9px;border-radius:12px;background:#fff}
+.criteria-red{color:#ad382d}.criteria-orange{color:#b85c00}.criteria-blue{color:#166a9c}.criteria-green{color:#157b3d}
+
+.air-replay-overlay{position:fixed;inset:0;background:rgba(38,51,77,.94);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.air-replay-card{width:min(760px,95vw);background:#fff;border-radius:30px;padding:22px;text-align:center;box-shadow:0 15px 50px rgba(0,0,0,.35)}
+.air-replay-title{font-size:28px;font-weight:900;color:var(--purple);margin-bottom:8px}
+.air-replay-stars{font-size:48px;margin:8px}
+.air-replay-score{font-size:20px;font-weight:900;color:var(--dark-gray)}
+.air-replay-canvas{width:min(640px,90vw);aspect-ratio:4/3;background:#172033;border-radius:18px;margin:15px auto;border:5px solid #fff}
+.air-replay-close{margin-top:8px}
+
+
+.air-gesture-hud{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:9px;padding:7px 14px;border-radius:20px;background:rgba(15,23,42,.72);backdrop-filter:blur(8px);color:#fff;font-size:13px;white-space:nowrap;box-shadow:0 4px 18px rgba(0,0,0,.2)}
+.air-gesture-hud span{display:flex;align-items:center;gap:4px}.air-gesture-hud i{width:1px;height:18px;background:rgba(255,255,255,.35)}
+.air-corner-progress{position:absolute;right:16px;top:14px;z-index:21;min-width:62px;padding:7px 11px;border-radius:18px;background:hsl(0,78%,48%);color:#fff;font-size:22px;font-weight:900;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.24);transition:background .25s,color .25s,font-size .25s,transform .25s,box-shadow .25s;line-height:1}
+.air-corner-progress.excellent{transform:scale(1.1)}
+.air-writer-progress-frame{box-shadow:inset 0 0 0 0 var(--green),0 0 0 0 rgba(32,189,104,0);transition:box-shadow .2s}
+@media(max-width:600px){.air-gesture-hud{font-size:11px;gap:6px;padding:6px 9px}.air-corner-progress{font-size:17px;right:8px;top:8px}}
+
+
+.air-corner-progress{
+  position:absolute;right:16px;top:14px;z-index:21;min-width:84px;padding:9px 13px;
+  border-radius:18px;background:#d64545;color:#fff;font-size:17px;font-weight:900;
+  text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.24);
+  transition:background .25s,font-size .25s,transform .25s,box-shadow .25s;
+  line-height:1.05;letter-spacing:.4px
+}
+.air-ok-gesture{
+  position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:30;
+  padding:8px 18px;border-radius:18px;background:rgba(32,189,104,.95);color:#fff;
+  text-align:center;font-size:11px;font-weight:900;line-height:1.25;
+  border:3px solid rgba(255,255,255,.85);box-shadow:0 5px 20px rgba(32,189,104,.45);
+  animation:airOkPulse 1.1s infinite alternate;pointer-events:none
+}
+.air-ok-gesture strong{font-size:22px;letter-spacing:1px}
+@keyframes airOkPulse{from{transform:translateX(-50%) scale(.96)}to{transform:translateX(-50%) scale(1.04)}}
+
+
+.air-replay-word{font-size:38px;font-weight:1000;letter-spacing:7px;color:var(--purple);min-height:52px;margin:4px 0 8px;animation:wordReveal .55s ease both}
+.air-replay-suspense{font-size:15px;font-weight:900;color:var(--dark-gray);min-height:25px;margin:2px 0 8px}
+.air-replay-stars{min-height:62px;letter-spacing:4px}
+.air-replay-stars .air-star{display:inline-block;opacity:.14;filter:grayscale(1);transform:scale(.65);transition:opacity .35s,filter .35s,transform .4s}
+.air-replay-stars .air-star.revealed{opacity:1;filter:none;transform:scale(1);animation:starPop .42s cubic-bezier(.2,1.5,.4,1)}
+@keyframes starPop{0%{transform:scale(.2) rotate(-18deg)}65%{transform:scale(1.28) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes wordReveal{from{opacity:0;transform:translateY(-8px);letter-spacing:16px}to{opacity:1;transform:translateY(0);letter-spacing:7px}}
+
+
+.air-free-mode-badge{
+  position:absolute;right:16px;top:14px;z-index:22;padding:9px 14px;border-radius:18px;
+  background:linear-gradient(135deg,#783ff0,#159ee8);color:#fff;font-size:14px;font-weight:1000;
+  box-shadow:0 5px 20px rgba(120,63,240,.4);letter-spacing:.5px
+}
+
+
+.air-current-word-hint{
+  position:absolute;
+  top:58px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:19;
+  color:rgba(255,255,255,.48);
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:4px;
+  text-align:center;
+  white-space:nowrap;
+  text-transform:uppercase;
+  text-shadow:0 1px 3px rgba(0,0,0,.25);
+  pointer-events:none;
+  transition:opacity .25s,transform .25s;
+}
+.air-current-word-hint.free-mode{
+  opacity:0;
+  transform:translateX(-50%) translateY(-4px);
+}
+@media(max-width:600px){
+  .air-current-word-hint{
+    top:54px;
+    font-size:10px;
+    letter-spacing:3px;
+  }
+}
+
+
+/* V11: larger, subtle current-word indicator */
+.air-current-word-hint{
+  top:62px !important;
+  width:80% !important;
+  color:rgba(255,255,255,.58) !important;
+  font-size:18px !important;
+  letter-spacing:6px !important;
+  text-align:center !important;
+}
+@media(max-width:600px){
+  .air-current-word-hint{
+    top:56px !important;
+    font-size:14px !important;
+    letter-spacing:4px !important;
+  }
+}
+
+/* V11: larger and centered Air Writer camera/drawing canvas */
+#game-air .air-container,
+#game-air .air-writer-progress-frame{
+  width:min(92vw, 900px) !important;
+  max-width:900px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+@media(min-width:900px){
+  #game-air .air-container,
+  #game-air .air-writer-progress-frame{
+    width:min(78vw, 900px) !important;
+  }
+}
+@media(max-width:700px){
+  #game-air .air-container,
+  #game-air .air-writer-progress-frame{
+    width:96vw !important;
+  }
+}
+
+/* V11: percentage/completion text is not shown to the child */
+#game-air #airFeedback{
+  display:none !important;
+}
+
+
+/* Free Drawing palette — only visible in Free Drawing mode */
+.air-free-palette{
+  position:absolute;
+  right:14px;
+  top:112px;
+  z-index:25;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+}
+.air-color-swatch{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  border:3px solid rgba(255,255,255,.96);
+  padding:0;
+  box-shadow:0 3px 10px rgba(0,0,0,.35);
+  transition:transform .18s ease, box-shadow .18s ease, outline .18s ease;
+}
+.air-color-swatch.active{
+  transform:scale(1.18);
+  outline:3px solid rgba(255,255,255,.55);
+  outline-offset:2px;
+  box-shadow:0 0 0 3px rgba(21,158,232,.45),0 4px 14px rgba(0,0,0,.4);
+}
+@media(max-width:600px){
+  .air-free-palette{right:8px;top:104px;gap:7px}
+  .air-color-swatch{width:25px;height:25px;border-width:2px}
+}
+
 /* GAME 5: AIR WRITER STYLES */
 .air-container{position:relative;width:100%;max-width:640px;margin:0 auto;border-radius:25px;overflow:hidden;border:6px solid #fff;box-shadow:0 8px rgba(0,0,0,0.2);aspect-ratio:4/3;background:#000;}
 .air-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1);}
@@ -300,30 +470,65 @@ button{font:inherit}
 <main class="workspace view-section" id="game-air">
 <button class="back-btn" onclick="switchMainView('games')">⬅️ Quit Game</button>
 <div style="text-align:center;">
-<div class="air-word" id="airWordPrompt"></div>
-<div class="air-instructions">Lift your index finger to write letters from left to right!</div>
+<div class="air-word" id="airWordPrompt" style="display:none"></div>
+<div class="air-instructions" id="airInstructions" style="display:none"></div>
+<div style="display:none" class="air-status-row">
+  <div class="air-score-card"><span>LETTER MATCH</span><strong id="airScorePercent">0%</strong></div>
+  <div class="air-score-card"><span>LEVEL</span><strong id="airAccuracyLevel">START</strong></div>
+  <div class="air-score-card"><span>STATUS</span><strong id="airGestureStatus">PAUSED</strong></div>
+</div>
+
 <div id="airStars" style="font-size: 40px; margin-bottom: 10px; display: none;"></div>
 <div id="airFeedback" class="logic-feedback"></div>
-<div id="airProgressContainer" style="width: 100%; max-width: 640px; margin: 10px auto 15px; height: 15px; background: #e2e8f0; border-radius: 8px; overflow: hidden; border: 3px solid #fff;">
-    <div id="airProgressFill" style="width: 0%; height: 100%; background: var(--green); transition: 0.3s;"></div>
 </div>
-</div>
-<div class="air-container">
+<div class="air-container air-writer-progress-frame">
 <div class="air-loading" id="airLoading">
     <div class="loader-spinner"></div>
     Loading Camera & AI Model...<br>Please allow camera access.
 </div>
 <video id="airVideo" class="air-video" autoplay playsinline muted></video>
 <canvas id="guideCanvas" class="air-canvas" style="z-index:0;"></canvas>
+<div id="airGestureHud" class="air-gesture-hud" aria-label="Air Writer gesture controls">
+  <span>✋ <b>Pause</b></span><i></i>
+  <span>✊ <b>Undo</b></span><i></i>
+  <span>☝️ <b>Draw</b></span>
+</div>
+<div id="airCurrentWordHint" class="air-current-word-hint"></div>
+<div id="airCornerProgress" class="air-corner-progress">BAD</div>
+<div id="airFreeModeBadge" class="air-free-mode-badge" style="display:none">🎨 FREE DRAWING</div>
+
+<div id="airFreePalette" class="air-free-palette" style="display:none" aria-label="Free drawing colors">
+  <button class="air-color-swatch active" data-color="#ef3f91" data-index="0" style="background:#ef3f91" aria-label="Red"></button>
+  <button class="air-color-swatch" data-color="#ffd43b" data-index="1" style="background:#ffd43b" aria-label="Yellow"></button>
+  <button class="air-color-swatch" data-color="#159ee8" data-index="2" style="background:#159ee8" aria-label="Blue"></button>
+  <button class="air-color-swatch" data-color="#20bd68" data-index="3" style="background:#20bd68" aria-label="Green"></button>
+  <button class="air-color-swatch" data-color="#ff75b5" data-index="4" style="background:#ff75b5" aria-label="Pink"></button>
+  <button class="air-color-swatch" data-color="#111111" data-index="5" style="background:#111111" aria-label="Black"></button>
+  <button class="air-color-swatch" data-color="#ffffff" data-index="6" style="background:#ffffff" aria-label="White"></button>
+</div>
+
+<div id="airOkGesture" class="air-ok-gesture" style="display:none">🖐️ HOLD OPEN HAND HERE<br><strong>OK ✓</strong></div>
 <canvas id="airCanvas" class="air-canvas" style="z-index:1;"></canvas>
 <canvas id="drawCanvas" class="air-draw-canvas" style="z-index:2;"></canvas>
 </div>
 <div class="game-controls" style="margin-top:20px;">
-<button class="btn-action" onclick="clearAirCanvas()" style="background:var(--red);">🗑️ CLEAR</button>
-<button class="btn-action" id="airDoneBtn" onclick="checkAirLetter()" style="background:var(--green);">✅ DONE</button>
+<button class="btn-action" id="airClearBtn" onclick="clearAirCanvas()" style="background:var(--red);">🗑️ CLEAR LETTER</button>
+<button class="btn-action" id="airFreeDrawBtn" onclick="toggleFreeDrawing()" style="background:var(--green);">🎨 FREE DRAWING</button>
 <button class="btn-action" onclick="nextAirWord()" style="background:var(--purple);">⏭️ NEW WORD</button>
 </div>
 </main>
+
+<div class="air-replay-overlay" id="airReplayOverlay">
+ <div class="air-replay-card">
+  <div class="air-replay-title" id="airReplayTitle">🎉 WORD COMPLETE!</div>
+  <div class="air-replay-word" id="airReplayWord"></div>
+  <div class="air-replay-suspense" id="airReplaySuspense">Calculating your stars...</div>
+  <div class="air-replay-stars" id="airReplayStars"></div>
+  <div class="air-replay-score" id="airReplayScore"></div>
+  <canvas class="air-replay-canvas" id="airReplayCanvas" width="640" height="480"></canvas>
+  <button class="btn-action air-replay-close" onclick="closeAirReplay()">✨ CONTINUE</button>
+ </div>
+</div>
 
 <!-- GAME 6: LISTEN & REPEAT -->
 <main class="workspace view-section" id="game-repeat">
@@ -393,7 +598,6 @@ const habitats = [
 {id:"city", emoji:"🏙️", name:"CITY"},
 {id:"country", emoji:"🏞️", name:"COUNTRY"},
 {id:"house", emoji:"🏠", name:"HOUSE"},
-{id:"apartment", emoji:"🏢", name:"APARTMENT"},
 {id:"cave", emoji:"⛰️", name:"CAVE"},
 {id:"boat", emoji:"⛵", name:"BOAT"},
 {id:"castle", emoji:"🏰", name:"CASTLE"},
@@ -851,404 +1055,684 @@ $('bombArt').textContent = "💥";
 }
 }
 
-// GAME 5: AIR WRITER
-let airHands = null;
-let airCamera = null;
-let airCtx = null;
-let drawCtx = null;
-let guideCtx = null;
-let isAirDrawing = false;
-let airLastX = 0;
-let airLastY = 0;
-let modelLoaded = false;
+// GAME 5: AIR WRITER — POLISHED VERSION
+let airHands = null, airCamera = null, airCtx = null, drawCtx = null, guideCtx = null;
+let modelLoaded = false, airCurrentWord = "", airCurrentLetterIndex = 0, airWordTotalScore = 0;
+let airLastX = 0, airLastY = 0, isAirDrawing = false, airPaused = false;
+let airStrokes = [], airCurrentStroke = null, airLastGesture = "paused";
+let airUndoCooldown = 0, airAutoAdvanceTimer = null, airLastScore = 0;
+let airCompletedLetters = [], airAdvancing = false, airFreeDrawing = false;
+let airFreeStrokes = [], airBrushColor = "#ef3f91", airSelectedColorIndex = 0;
 
-let airCurrentWord = "";
-let airCurrentLetterIndex = 0;
-let airWordTotalScore = 0;
-
-async function stopAirGame() {
-    if (airCamera) {
-        try { await airCamera.stop(); } catch(e) {}
-        airCamera = null;
-    }
-    const videoElement = $('airVideo');
-    if (videoElement && videoElement.srcObject) {
-        const stream = videoElement.srcObject;
-        stream.getTracks().forEach(track => track.stop());
-        videoElement.srcObject = null;
-    }
+function setAirStatus(text, drawing=false){
+  airLastGesture = text;
+  const el = $('airGestureStatus'); if(el) el.textContent = text.toUpperCase();
+  if(airCtx){ airCtx.font='bold 16px Trebuchet MS'; airCtx.fillStyle=drawing?'#20bd68':'#ff9228'; }
 }
 
-async function initAirGame() {
-    $('airLoading').style.display = 'flex';
-    await stopAirGame();
-    await new Promise(r => setTimeout(r, 600));
-
-    const airCanvasElement = $('airCanvas');
-    const drawCanvasElement = $('drawCanvas');
-    const guideCanvasElement = $('guideCanvas');
-
-    if (airCanvasElement) {
-        airCanvasElement.width = 640;
-        airCanvasElement.height = 480;
-        airCtx = airCanvasElement.getContext('2d');
-    }
-    if (drawCanvasElement) {
-        drawCanvasElement.width = 640;
-        drawCanvasElement.height = 480;
-        drawCtx = drawCanvasElement.getContext('2d');
-        drawCtx.lineWidth = 14;
-        drawCtx.strokeStyle = "#ef3f91";
-        drawCtx.lineCap = "round";
-        drawCtx.lineJoin = "round";
-    }
-    if (guideCanvasElement) {
-        guideCanvasElement.width = 640;
-        guideCanvasElement.height = 480;
-        guideCtx = guideCanvasElement.getContext('2d');
-    }
-
-    nextAirWord();
-
-    if (!airHands) {
-        airHands = new Hands({locateFile: (file) => {
-            return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-        }});
-        
-        airHands.setOptions({
-            maxNumHands: 1,
-            modelComplexity: 1,
-            minDetectionConfidence: 0.7,
-            minTrackingConfidence: 0.7
-        });
-        
-        airHands.onResults(onAirHandsResults);
-    }
-
-    const videoElement = $('airVideo');
-    try {
-        airCamera = new Camera(videoElement, {
-            onFrame: async () => {
-                if (airHands && videoElement && videoElement.readyState >= 2) {
-                    await airHands.send({image: videoElement});
-                }
-            },
-            width: 640,
-            height: 480
-        });
-        await airCamera.start();
-    } catch(err) {
-        console.error("Camera start error:", err);
-        if (err.name === 'NotReadableError' || err.message.includes('Device in use')) {
-            $('airLoading').innerHTML = '<div class="loader-spinner"></div>Camera busy. Retrying in 1 second...';
-            await new Promise(r => setTimeout(r, 1000));
-            try {
-                await airCamera.start();
-                return;
-            } catch(retryErr) {
-                console.error("Retry failed:", retryErr);
-            }
-        }
-        $('airLoading').style.display = 'none';
-        $('airFeedback').innerHTML = "❌ Camera in use or blocked. Please refresh & allow access.";
-        $('airFeedback').className = "logic-feedback logic-wrong";
-    }
+function airCell(){
+  // Keep comfortable dead-space at both canvas edges so the first and last
+  // letters can be written without pushing the hand outside camera tracking.
+  const total=Math.max(1,airCurrentWord.length);
+  const margin=42, usable=640-margin*2, w=usable/total;
+  const start=margin+airCurrentLetterIndex*w;
+  return {w,start,end:start+w,cx:start+w/2,cy:240,margin,usable};
 }
 
-function onAirHandsResults(results) {
-    if(!modelLoaded) {
-        modelLoaded = true;
-        $('airLoading').style.display = 'none';
-    }
-
-    if(!airCtx) return;
-    airCtx.save();
-    airCtx.clearRect(0, 0, 640, 480);
-    
-    if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-        const landmarks = results.multiHandLandmarks[0];
-        const indexTip = landmarks[8];
-        const indexPip = landmarks[6];
-        const middleTip = landmarks[12];
-        const middlePip = landmarks[10];
-        
-        const x = (1.0 - indexTip.x) * 640;
-        const y = indexTip.y * 480;
-
-        const mirroredLandmarks = landmarks.map(lm => ({
-            x: 1.0 - lm.x,
-            y: lm.y,
-            z: lm.z
-        }));
-
-        drawConnectors(airCtx, mirroredLandmarks, HAND_CONNECTIONS, {color: 'rgba(255,255,255,0.5)', lineWidth: 2});
-        drawLandmarks(airCtx, mirroredLandmarks, {color: '#159ee8', lineWidth: 1, radius: 4});
-
-        const isIndexUp = indexTip.y < indexPip.y;
-        const isMiddleDown = middleTip.y > middlePip.y;
-
-        if (isIndexUp && isMiddleDown) { 
-            airCtx.beginPath();
-            airCtx.arc(x, y, 12, 0, 2 * Math.PI);
-            airCtx.fillStyle = "#ff9228"; 
-            airCtx.fill();
-
-            if (!isAirDrawing) {
-                isAirDrawing = true;
-                airLastX = x; 
-                airLastY = y;
-            } else {
-                if(drawCtx) {
-                    drawCtx.beginPath();
-                    drawCtx.moveTo(airLastX, airLastY);
-                    drawCtx.lineTo(x, y);
-                    drawCtx.stroke();
-                }
-                airLastX = x; 
-                airLastY = y;
-            }
-        } else {
-            isAirDrawing = false;
-        }
-    } else {
-        isAirDrawing = false;
-    }
-    airCtx.restore();
+async function stopAirGame(){
+  clearTimeout(airAutoAdvanceTimer);
+  isAirDrawing=false; airPaused=false; airCurrentStroke=null;
+  if(airCamera){ try{ await airCamera.stop(); }catch(e){} airCamera=null; }
+  const v=$('airVideo'); if(v && v.srcObject){ v.srcObject.getTracks().forEach(t=>t.stop()); v.srcObject=null; }
 }
 
-function clearAirCanvas() {
-    if(drawCtx && airCurrentWord) {
-        const totalLetters = airCurrentWord.length;
-        const cellW = 640 / totalLetters;
-        const startX = airCurrentLetterIndex * cellW;
-        drawCtx.clearRect(startX, 0, cellW, 480);
-    }
-    const progressFill = $('airProgressFill');
-    if(progressFill) {
-        progressFill.style.width = '0%';
-    }
-    const feedbackEl = $('airFeedback');
-    if(feedbackEl) {
-        feedbackEl.innerHTML = "";
-        feedbackEl.className = "logic-feedback";
-    }
+async function initAirGame(){
+  $('airLoading').style.display='flex'; await stopAirGame(); await new Promise(r=>setTimeout(r,400));
+  const a=$('airCanvas'), d=$('drawCanvas'), g=$('guideCanvas');
+  [a,d,g].forEach(c=>{c.width=640;c.height=480});
+  airCtx=a.getContext('2d'); drawCtx=d.getContext('2d'); guideCtx=g.getContext('2d');
+  drawCtx.lineWidth=14; drawCtx.strokeStyle='#ef3f91'; drawCtx.lineCap='round'; drawCtx.lineJoin='round';
+  nextAirWord();
+  if(!airHands){
+    airHands=new Hands({locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}`});
+    airHands.setOptions({maxNumHands:1,modelComplexity:1,minDetectionConfidence:.7,minTrackingConfidence:.7});
+    airHands.onResults(onAirHandsResults);
+  }
+  const video=$('airVideo');
+  try{
+    airCamera=new Camera(video,{onFrame:async()=>{if(airHands&&video.readyState>=2) await airHands.send({image:video});},width:640,height:480});
+    await airCamera.start();
+  }catch(err){
+    $('airLoading').style.display='none';
+    $('airFeedback').innerHTML='❌ Camera in use or blocked. Please refresh & allow access.';
+    $('airFeedback').className='logic-feedback logic-wrong';
+  }
 }
 
-function nextAirWord() {
-    const randomHab = habitats[Math.floor(Math.random() * habitats.length)];
-    airCurrentWord = randomHab.name.toUpperCase();
-    airCurrentLetterIndex = 0;
-    airWordTotalScore = 0;
-    
-    if(drawCtx) {
-        drawCtx.clearRect(0, 0, 640, 480);
-    }
+function isFingerUp(tip,pip){ return tip.y < pip.y; }
 
-    const feedbackEl = $('airFeedback');
-    if(feedbackEl) {
-        feedbackEl.innerHTML = "";
-        feedbackEl.className = "logic-feedback";
-    }
-    
-    const progressFill = $('airProgressFill');
-    if(progressFill) {
-        progressFill.style.width = "0%";
-    }
+function onAirHandsResults(results){
+  if(!modelLoaded){modelLoaded=true;$('airLoading').style.display='none';}
+  if(!airCtx) return;
+  airCtx.clearRect(0,0,640,480);
+  if(!results.multiHandLandmarks?.length){ endAirStroke(); setAirStatus('paused'); return; }
+  const lm=results.multiHandLandmarks[0], mirrored=lm.map(p=>({x:1-p.x,y:p.y,z:p.z}));
+  drawConnectors(airCtx,mirrored,HAND_CONNECTIONS,{color:'rgba(255,255,255,.45)',lineWidth:2});
+  drawLandmarks(airCtx,mirrored,{color:'#159ee8',lineWidth:1,radius:4});
 
-    const starsEl = $('airStars');
-    if(starsEl) {
-        starsEl.style.display = "none";
-        starsEl.innerHTML = "";
-    }
-    
-    const doneBtn = $('airDoneBtn');
-    if(doneBtn) doneBtn.disabled = false;
-    
-    updateAirWordUI();
-    drawAirGuides();
-}
+  const indexUp=isFingerUp(lm[8],lm[6]), middleUp=isFingerUp(lm[12],lm[10]), ringUp=isFingerUp(lm[16],lm[14]), pinkyUp=isFingerUp(lm[20],lm[18]);
+  const openPalm=indexUp&&middleUp&&ringUp&&pinkyUp;
+  const fist=!indexUp&&!middleUp&&!ringUp&&!pinkyUp;
+  const oneFinger=indexUp&&!middleUp;
 
-function updateAirWordUI() {
-    let boxesHTML = "";
-    for(let i = 0; i < airCurrentWord.length; i++) {
-        let cls = "air-letter-box";
-        if (i < airCurrentLetterIndex) cls += " done";
-        else if (i === airCurrentLetterIndex) cls += " active";
-        boxesHTML += `<span class="${cls}" id="air-letter-${i}">${airCurrentWord[i]}</span>`;
-    }
-    $('airWordPrompt').innerHTML = boxesHTML;
-}
+  // ✋ pauses capture. In Free Drawing it only pauses.
+  if(openPalm){
+    endAirStroke();
+    const palmX=(1-((lm[0].x+lm[9].x)/2))*640;
+    const palmY=((lm[0].y+lm[9].y)/2)*480;
 
-function checkAirLetter() {
-    if (airCurrentLetterIndex >= airCurrentWord.length) return;
-
-    const letter = airCurrentWord[airCurrentLetterIndex];
-    const totalLetters = airCurrentWord.length;
-    const cellW = 640 / totalLetters;
-    const startX = airCurrentLetterIndex * cellW;
-    const targetCenterX = startX + (cellW / 2);
-    const targetCenterY = 240;
-
-    const maskCanvas = document.createElement('canvas');
-    maskCanvas.width = 640;
-    maskCanvas.height = 480;
-    const mCtx = maskCanvas.getContext('2d');
-    
-    const fontSize = Math.min(260, cellW * 1.3);
-    mCtx.strokeStyle = "#ffffff";
-    mCtx.lineWidth = 38;
-    mCtx.lineCap = "round";
-    mCtx.lineJoin = "round";
-    mCtx.font = `bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;
-    mCtx.textAlign = 'center';
-    mCtx.textBaseline = 'middle';
-    mCtx.strokeText(letter, targetCenterX, targetCenterY);
-
-    const maskData = mCtx.getImageData(0, 0, 640, 480).data;
-    const drawData = drawCtx.getImageData(0, 0, 640, 480).data;
-
-    let letterPixels = [];
-    for (let y = 0; y < 480; y += 4) {
-        for (let x = Math.floor(startX); x < Math.floor(startX + cellW); x += 4) {
-            const idx = (y * 640 + x) * 4;
-            if (maskData[idx + 3] > 128) {
-                letterPixels.push({x, y});
-            }
-        }
-    }
-
-    let userPixels = [];
-    let strayPixels = 0;
-    for (let y = 0; y < 480; y += 4) {
-        for (let x = 0; x < 640; x += 4) {
-            const idx = (y * 640 + x) * 4;
-            if (drawData[idx + 3] > 50) {
-                if (x >= startX && x < startX + cellW) {
-                    userPixels.push({x, y});
-                } else {
-                    strayPixels++;
-                }
-            }
-        }
-    }
-
-    const feedbackEl = $('airFeedback');
-    const progressFill = $('airProgressFill');
-
-    if (userPixels.length < 12) {
-        progressFill.style.width = '0%';
-        progressFill.style.background = 'var(--orange)';
-        feedbackEl.innerHTML = `❌ Please trace the letter ${letter} inside the column!`;
-        feedbackEl.className = "logic-feedback logic-wrong";
+    if(airFreeDrawing){
+      // Passing the OPEN PALM over a colour circle selects that brush.
+      if(detectAirPalettePalm(palmX,palmY)){
+        setAirStatus('brush selected');
         return;
+      }
+      setAirStatus('hand pause');
+      drawAirCursor(palmX,palmY,'#159ee8');
+      return;
     }
 
-    let matchedUserPixels = 0;
-    userPixels.forEach(up => {
-        let found = false;
-        for (let lp of letterPixels) {
-            if (Math.hypot(up.x - lp.x, up.y - lp.y) <= 45) {
-                found = true;
-                break;
-            }
-        }
-        if (found) matchedUserPixels++;
-    });
-
-    let coveredLetterPixels = 0;
-    letterPixels.forEach(lp => {
-        let covered = false;
-        for (let up of userPixels) {
-            if (Math.hypot(up.x - lp.x, up.y - lp.y) <= 45) {
-                covered = true;
-                break;
-            }
-        }
-        if (covered) coveredLetterPixels++;
-    });
-
-    const recall = letterPixels.length > 0 ? (coveredLetterPixels / letterPixels.length) : 0;
-    const precision = userPixels.length > 0 ? (matchedUserPixels / userPixels.length) : 0;
-    const strayPenalty = Math.max(0, 1 - (strayPixels / 40));
-
-    let score = Math.round(((recall * 0.55) + (precision * 0.35) + (strayPenalty * 0.10)) * 100);
-    if (recall < 0.25 || precision < 0.20) {
-        score = Math.min(score, 45);
+    // In word mode, sweep the actual palm over OK to confirm GOOD or above.
+    const current=calculateAirScore();
+    const inOkZone=palmX>=220 && palmX<=420 && palmY>=350 && palmY<=480;
+    const ok=$('airOkGesture');
+    if(ok && current.score>=70){
+      ok.style.transform='translateX(-50%) scale('+(inOkZone?1.12:1)+')';
+      ok.style.background=inOkZone?'#159ee8':'rgba(32,189,104,.95)';
     }
-
-    progressFill.style.width = score + '%';
-
-    if (score >= 68) {
-        airWordTotalScore += score;
-        progressFill.style.background = 'var(--green)';
-        feedbackEl.innerHTML = `✅ CORRECT: ${letter}!`;
-        feedbackEl.className = "logic-feedback logic-correct";
-        speak(letter);
-
-        airCurrentLetterIndex++;
-        updateAirWordUI();
-        progressFill.style.width = '0%';
-        drawAirGuides();
-
-        if (airCurrentLetterIndex >= airCurrentWord.length) {
-            $('airDoneBtn').disabled = true;
-            const avg = airWordTotalScore / airCurrentWord.length;
-            let starsHTML = avg > 85 ? "⭐⭐⭐⭐⭐" : avg > 72 ? "⭐⭐⭐⭐" : avg > 58 ? "⭐⭐⭐" : "⭐⭐";
-            feedbackEl.innerHTML = `🎉 AMAZING! You wrote ${airCurrentWord}!`;
-            $('airStars').style.display = "block";
-            $('airStars').innerHTML = starsHTML;
-            speak(airCurrentWord);
-        }
-    } else {
-        progressFill.style.background = 'var(--orange)';
-        feedbackEl.innerHTML = `❌ Trace closer to letter ${letter}! (${score}%)`;
-        feedbackEl.className = "logic-feedback logic-wrong";
+    if(current.score>=70 && inOkZone && !airAdvancing){
+      if(ok){ok.innerHTML='✨ GREAT!<br><strong>OK ✓</strong>';ok.style.background='#20bd68';}
+      completeAirLetter(current.score);
+      return;
     }
+    setAirStatus('hand pause'); drawAirCursor(palmX,palmY,'#159ee8'); return;
+  }
+
+  // ✊ undo gesture, debounced.
+  if(fist && Date.now()-airUndoCooldown>1200){ airUndoCooldown=Date.now(); undoAirStroke(); endAirStroke(); setAirStatus('undo'); return; }
+
+  if(airPaused){ endAirStroke(); setAirStatus('manual pause'); return; }
+  if(!oneFinger){ endAirStroke(); setAirStatus('move / pause'); return; }
+
+  const x=(1-lm[8].x)*640,y=lm[8].y*480;
+  drawAirCursor(x,y,'#ff9228');
+
+  // Word mode captures only the active letter column. Free Drawing captures
+  // the entire canvas without analysis or progression.
+  if(!airFreeDrawing){
+    const c=airCell();
+    if(x<c.start-12 || x>c.end+12){ endAirStroke(); setAirStatus('next-letter move'); return; }
+  }
+
+  setAirStatus('drawing',true);
+  if(!isAirDrawing){
+    isAirDrawing=true; airLastX=x; airLastY=y;
+    airCurrentStroke=[{x,y}];
+    if(airFreeDrawing) airCurrentStroke.color=airBrushColor;
+    airStrokes.push(airCurrentStroke);
+  }else{
+    // Ignore teleport jumps caused by tracking glitches.
+    if(Math.hypot(x-airLastX,y-airLastY)<90){
+      airCurrentStroke.push({x,y}); redrawAirStrokes();
+    }
+    airLastX=x;airLastY=y;
+  }
+  if(!airFreeDrawing) updateAirLiveScore();
 }
 
-function drawAirGuides() {
-    if(!guideCtx || !airCurrentWord) return;
-    guideCtx.clearRect(0, 0, 640, 480);
-    
-    const totalLetters = airCurrentWord.length;
-    const cellW = 640 / totalLetters;
-
-    if(airCurrentLetterIndex < totalLetters) {
-        const startX = airCurrentLetterIndex * cellW;
-        const letter = airCurrentWord[airCurrentLetterIndex];
-        const targetCenterX = startX + (cellW / 2);
-        const targetCenterY = 240;
-
-        guideCtx.fillStyle = "rgba(255, 255, 255, 0.15)";
-        guideCtx.fillRect(startX, 0, cellW, 480);
-
-        guideCtx.strokeStyle = "rgba(255, 255, 255, 0.7)";
-        guideCtx.lineWidth = 4;
-        guideCtx.setLineDash([10, 10]);
-        guideCtx.beginPath();
-        guideCtx.arc(targetCenterX, targetCenterY, cellW * 0.42, 0, 2 * Math.PI);
-        guideCtx.stroke();
-        guideCtx.setLineDash([]);
-
-        const fontSize = Math.min(260, cellW * 1.3);
-        guideCtx.fillStyle = "rgba(255, 255, 255, 0.85)";
-        guideCtx.font = `bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;
-        guideCtx.textAlign = 'center';
-        guideCtx.textBaseline = 'middle';
-        guideCtx.fillText(letter, targetCenterX, targetCenterY);
-    }
-
-    guideCtx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-    guideCtx.lineWidth = 3;
-    guideCtx.setLineDash([12, 12]);
-    guideCtx.beginPath();
-    for(let i = 1; i < totalLetters; i++) {
-        guideCtx.moveTo(i * cellW, 0);
-        guideCtx.lineTo(i * cellW, 480);
-    }
-    guideCtx.stroke();
-    guideCtx.setLineDash([]);
+function drawAirCursor(x,y,color){
+  airCtx.beginPath();airCtx.arc(x,y,12,0,Math.PI*2);airCtx.fillStyle=color;airCtx.fill();
 }
+function endAirStroke(){ isAirDrawing=false;airCurrentStroke=null; }
+
+function redrawAirStrokes(){
+  if(!drawCtx)return; drawCtx.clearRect(0,0,640,480);
+  drawCtx.lineWidth=14;drawCtx.lineCap='round';drawCtx.lineJoin='round';
+  airStrokes.forEach(st=>{
+    if(!st.length)return;
+    const strokeColor=(airFreeDrawing && st.color)?st.color:'#ef3f91';
+    drawCtx.strokeStyle=strokeColor;
+    if(st.length===1){
+      drawCtx.beginPath();drawCtx.arc(st[0].x,st[0].y,7,0,Math.PI*2);
+      drawCtx.fillStyle=strokeColor;drawCtx.fill();return;
+    }
+    drawCtx.beginPath();drawCtx.moveTo(st[0].x,st[0].y);
+    st.slice(1).forEach(p=>drawCtx.lineTo(p.x,p.y));drawCtx.stroke();
+  });
+}
+
+
+function toggleFreeDrawing(){
+  airFreeDrawing=!airFreeDrawing;
+  airScoreCache.time=0;
+  clearTimeout(airAutoAdvanceTimer); airAutoAdvanceTimer=null;
+  airAdvancing=false;
+  endAirStroke();
+
+  const btn=$('airFreeDrawBtn');
+  const clearBtn=$('airClearBtn');
+  const badge=$('airFreeModeBadge');
+  const palette=$('airFreePalette');
+  const progress=$('airCornerProgress');
+  const ok=$('airOkGesture');
+  const wordHint=$('airCurrentWordHint');
+
+  if(airFreeDrawing){
+    // Restore the child's previous Free Drawing exactly as it was.
+    airStrokes=airFreeStrokes;
+    redrawAirStrokes();
+
+    if(btn){btn.innerHTML='🔤 WORD MODE';btn.style.background='var(--purple)';}
+    if(clearBtn) clearBtn.innerHTML='🗑️ CLEAR BOARD';
+    if(badge) badge.style.display='block';
+    if(palette) palette.style.display='flex';
+    if(progress) progress.style.display='none';
+    if(ok) ok.style.display='none';
+    if(wordHint) wordHint.classList.add('free-mode');
+    if(guideCtx) guideCtx.clearRect(0,0,640,480);
+
+    $('airFeedback').innerHTML='';
+    $('airFeedback').className='logic-feedback';
+    setAirStatus('free drawing');
+
+    updateAirPaletteUI();
+  }else{
+    // Save Free Drawing before returning to the analysed Word Mode.
+    airFreeStrokes=airStrokes;
+    airStrokes=[];
+    redrawAirStrokes();
+
+    if(btn){btn.innerHTML='🎨 FREE DRAWING';btn.style.background='var(--green)';}
+    if(clearBtn) clearBtn.innerHTML='🗑️ CLEAR LETTER';
+    if(badge) badge.style.display='none';
+    if(palette) palette.style.display='none';
+    if(progress) progress.style.display='block';
+    if(wordHint){
+      wordHint.textContent=airCurrentWord;
+      wordHint.classList.remove('free-mode');
+    }
+
+    $('airFeedback').innerHTML='';
+    $('airFeedback').className='logic-feedback';
+    drawAirGuides();
+    updateAirLiveScore(true);
+    setAirStatus('ready');
+  }
+}
+
+function updateAirPaletteUI(){
+  document.querySelectorAll('#airFreePalette .air-color-swatch').forEach((swatch,i)=>{
+    swatch.classList.toggle('active',i===airSelectedColorIndex);
+  });
+}
+
+function selectAirBrush(index){
+  const colors=['#ef3f91','#ffd43b','#159ee8','#20bd68','#ff75b5','#111111','#ffffff'];
+  if(index<0 || index>=colors.length) return;
+  airSelectedColorIndex=index;
+  airBrushColor=colors[index];
+  updateAirPaletteUI();
+
+  // Small visible confirmation without cluttering the screen.
+  const palette=$('airFreePalette');
+  if(palette) palette.style.transform='scale(1.04)';
+  setTimeout(()=>{if(palette)palette.style.transform='';},120);
+}
+
+function detectAirPalettePalm(palmX,palmY){
+  if(!airFreeDrawing) return false;
+
+  // Palette circles are vertically arranged on the right side of the 640x480 canvas.
+  // A generous hit area makes palm hover easy for children.
+  const centers=[128,170,212,254,296,338,380];
+  const centerX=608;
+  const radius=31;
+
+  for(let i=0;i<centers.length;i++){
+    if(Math.hypot(palmX-centerX,palmY-centers[i])<=radius){
+      if(i!==airSelectedColorIndex) selectAirBrush(i);
+      drawAirCursor(palmX,palmY,airBrushColor);
+      return true;
+    }
+  }
+  return false;
+}
+
+function undoAirStroke(){
+  airScoreCache.time=0;
+  if(!airStrokes.length)return;
+  airStrokes.pop(); if(airFreeDrawing) airFreeStrokes=airStrokes; endAirStroke(); redrawAirStrokes(); if(!airFreeDrawing) updateAirLiveScore(true);
+  $('airFeedback').innerHTML='↩️ Last stroke removed.';
+  $('airFeedback').className='logic-feedback';
+}
+
+function toggleAirPause(){
+  airPaused=!airPaused; endAirStroke();
+  const pauseBtn=$('airPauseBtn');
+  if(pauseBtn){
+    pauseBtn.innerHTML=airPaused?'▶️ RESUME':'⏸️ PAUSE';
+    pauseBtn.style.background=airPaused?'var(--green)':'var(--blue)';
+  }
+  setAirStatus(airPaused?'manual pause':'ready');
+}
+
+function clearAirCanvas(){
+  airScoreCache.time=0;
+  endAirStroke();
+
+  if(airFreeDrawing){
+    airFreeStrokes=[];
+    airStrokes=airFreeStrokes;
+    redrawAirStrokes();
+    return;
+  }
+
+  airStrokes=[];
+  redrawAirStrokes();
+  updateAirLiveScore(true);
+  $('airFeedback').innerHTML='';
+  $('airFeedback').className='logic-feedback';
+}
+
+function buildAirMask(){
+  const c=airCell(), letter=airCurrentWord[airCurrentLetterIndex];
+  const mask=document.createElement('canvas');mask.width=640;mask.height=480;
+  const ctx=mask.getContext('2d'), fontSize=Math.min(260,c.w*1.3);
+  ctx.strokeStyle='#fff';ctx.lineWidth=38;ctx.lineCap='round';ctx.lineJoin='round';
+  ctx.font=`bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.strokeText(letter,c.cx,c.cy);
+  return {mask, c, letter};
+}
+
+let airScoreCache={time:0,result:{score:0,coverage:0,precision:0,ink:0,structure:0}};
+
+function calculateAirScore(){
+  if(airFreeDrawing) return {score:0,coverage:0,precision:0,ink:0,structure:0,weakRegions:0};
+  if(!drawCtx || airCurrentLetterIndex>=airCurrentWord.length)
+    return {score:0,coverage:0,precision:0,ink:0,structure:0};
+
+  const now=performance.now();
+  if(now-airScoreCache.time<100) return airScoreCache.result;
+
+  const {mask,c}=buildAirMask();
+  const md=mask.getContext('2d').getImageData(0,0,640,480).data;
+  const dd=drawCtx.getImageData(0,0,640,480).data;
+  const x0=Math.max(0,Math.floor(c.start)),x1=Math.min(640,Math.ceil(c.end));
+
+  let target=0,covered=0,user=0,matched=0;
+  const TARGET_TOLERANCE=28, USER_TOLERANCE=34;
+
+  // 4 x 4 structural map. Unlike the previous system, this detects whether
+  // important parts of the LETTER SHAPE are missing (for example A's crossbar
+  // or E's middle arm), instead of rewarding only total ink proximity.
+  const cols=4, rows=4;
+  const bins=Array.from({length:cols*rows},()=>({target:0,covered:0}));
+
+  for(let y=0;y<480;y+=4){
+    for(let x=x0;x<x1;x+=4){
+      const i=(y*640+x)*4,m=md[i+3]>100,u=dd[i+3]>30;
+      if(m){
+        target++;
+        const bx=Math.min(cols-1,Math.max(0,Math.floor((x-c.start)/c.w*cols)));
+        const by=Math.min(rows-1,Math.max(0,Math.floor(y/480*rows)));
+        const bin=bins[by*cols+bx];
+        bin.target++;
+        const hit=u||airPixelNear(dd,x,y,TARGET_TOLERANCE,c,30);
+        if(hit){covered++;bin.covered++;}
+      }
+      if(u){
+        user++;
+        if(m||airPixelNear(md,x,y,USER_TOLERANCE,c,100)) matched++;
+      }
+    }
+  }
+
+  const coverage=target?Math.round(covered/target*100):0;
+  const precision=user?Math.round(matched/user*100):0;
+
+  // Structural score: every meaningful occupied area of the reference letter
+  // must receive attention. Missing an entire arm/crossbar therefore cannot
+  // be hidden by tracing the rest very well.
+  const meaningful=bins.filter(b=>b.target>=5);
+  const regionScores=meaningful.map(b=>b.covered/b.target);
+  const weakRegions=regionScores.filter(v=>v<.45).length;
+  const structure=regionScores.length
+    ? Math.round(regionScores.reduce((a,b)=>a+b,0)/regionScores.length*100)
+    : 0;
+
+  // A weighted shape score, with explicit penalties for missing structural parts.
+  let score=user>8 ? Math.round(coverage*.72 + precision*.12 + structure*.16) : 0;
+  if(weakRegions>=1) score=Math.min(score,Math.round(82-weakRegions*10));
+  if(weakRegions>=2) score=Math.min(score,65);
+
+  const result={score:Math.max(0,score),coverage,precision,ink:user,structure,weakRegions};
+  airScoreCache={time:now,result};
+  return result;
+}
+
+function airPixelNear(data,x,y,r,c,alpha){
+  for(let yy=Math.max(0,y-r);yy<=Math.min(479,y+r);yy+=4){
+    for(let xx=Math.max(Math.floor(c.start),x-r);xx<=Math.min(Math.ceil(c.end)-1,x+r);xx+=4){
+      if(Math.hypot(xx-x,yy-y)<=r && data[(yy*640+xx)*4+3]>alpha)return true;
+    }
+  }
+  return false;
+}
+
+function updateAirLiveScore(silent=false){
+  const r=calculateAirScore(),pct=Math.max(0,Math.min(100,r.score));
+  airLastScore=pct;
+
+  let level='BAD',color='#d64545',hue=0;
+  if(pct>=98){level='PERFECT!';color='#20bd68';hue=135;}
+  else if(pct>=88){level='EXCELLENT';color='#49b85f';hue=112;}
+  else if(pct>=70){level='GOOD';color='#e0a21a';hue=48;}
+  else if(pct>=40){level='AVERAGE';color='#ef7d22';hue=25;}
+
+  const corner=$('airCornerProgress');
+  if(corner){
+    corner.textContent=level;
+    corner.style.background=color;
+    corner.style.fontSize=(level==='PERFECT!'?18:17)+'px';
+    corner.style.transform=`scale(${1+pct*.0015})`;
+    corner.style.boxShadow=`0 4px ${8+pct*.12}px ${color}88`;
+  }
+  $('airScorePercent').textContent=level;
+  $('airAccuracyLevel').textContent=level;
+
+  const ok=$('airOkGesture');
+  if(ok) ok.style.display=(pct>=70 && !airAdvancing && airCurrentLetterIndex<airCurrentWord.length)?'block':'none';
+
+  const frame=document.querySelector('.air-writer-progress-frame');
+  if(frame){
+    frame.style.boxShadow=`inset 0 0 0 ${Math.max(1,Math.round(1+pct/42))}px ${color}88,0 0 ${5+pct/6}px ${color}55`;
+  }
+
+  // PERFECT can still auto-complete, but Good/Excellent are intentionally
+  // controlled by the child's open-hand gesture over the OK target.
+  if(!silent && pct>=98 && r.coverage>=96 && r.precision>=76 && r.structure>=92 && r.weakRegions===0)
+    scheduleAirAdvance();
+  else if(pct<96) clearTimeout(airAutoAdvanceTimer);
+
+  return {...r,score:pct,level};
+}
+
+function scheduleAirAdvance(){
+  if(airAutoAdvanceTimer || airAdvancing || airCurrentLetterIndex>=airCurrentWord.length)return;
+  $('airFeedback').innerHTML='✨ Excellent! Letter detected…';
+  $('airFeedback').className='logic-feedback logic-correct';
+  airAutoAdvanceTimer=setTimeout(()=>{
+    airAutoAdvanceTimer=null;
+    const r=calculateAirScore();
+    if(r.score>=98 && r.coverage>=96 && r.precision>=76 && r.structure>=92 && r.weakRegions===0 && !airAdvancing) completeAirLetter(r.score);
+  },650);
+}
+
+function completeAirLetter(score){
+  if(airAdvancing || airCurrentLetterIndex>=airCurrentWord.length)return;
+  airAdvancing=true;
+  if($('airOkGesture'))$('airOkGesture').style.display='none';
+  clearTimeout(airAutoAdvanceTimer);airAutoAdvanceTimer=null;
+
+  const letter=airCurrentWord[airCurrentLetterIndex];
+  const snapshot=airStrokes.map(st=>st.map(pt=>({...pt})));
+  airCompletedLetters.push({letter, strokes:snapshot, score});
+  airWordTotalScore+=score;
+
+  $('airFeedback').innerHTML='';
+  $('airFeedback').className='logic-feedback logic-correct';
+  playAirSuccessSound(); speak(letter);
+
+  setTimeout(()=>{
+    airCurrentLetterIndex++;
+    airScoreCache.time=0;
+    airStrokes=[]; isAirDrawing=false; airCurrentStroke=null;
+    redrawAirStrokes();
+    updateAirWordUI();
+
+    if(airCurrentLetterIndex < airCurrentWord.length){
+      drawAirGuides();
+      $('airScorePercent').textContent='0%'; if($('airCornerProgress')){$('airCornerProgress').textContent='0%';$('airCornerProgress').classList.remove('excellent');}
+      $('airAccuracyLevel').textContent='READY';
+      airAdvancing=false;
+      setAirStatus('ready');
+      return;
+    }
+
+    // Word finished: keep state stable and launch replay.
+    drawAirGuides();
+    const avg=Math.round(airWordTotalScore/Math.max(1,airCurrentWord.length));
+    const stars=avg>=90?5:avg>=80?4:avg>=68?3:avg>=50?2:1;
+    $('airFeedback').innerHTML=`🎉 AMAZING! ${airCurrentWord} COMPLETE!`;
+    $('airStars').style.display='block';
+    $('airStars').innerHTML='⭐'.repeat(stars);
+    launchConfetti(320); playAirApplause(); launchWordLights();
+    speak(airCurrentWord);
+    setAirStatus('complete');
+    setTimeout(()=>showAirReplay(avg,stars),700);
+  },320);
+}
+
+function launchConfetti(amount=70){
+  const colors=['#ff9228','#ef3f91','#159ee8','#20bd68','#783ff0','#ffd43b'];
+  for(let i=0;i<amount;i++){
+    const e=document.createElement('div');
+    e.style.cssText=`position:fixed;z-index:10000;left:${50+(Math.random()-.5)*60}vw;top:${Math.random()*20-5}vh;width:${5+Math.random()*8}px;height:${8+Math.random()*12}px;background:${colors[i%colors.length]};border-radius:${Math.random()*50}%;pointer-events:none;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(e);
+    const dx=(Math.random()-.5)*900,dy=500+Math.random()*700,rot=(Math.random()-.5)*1200;
+    e.animate([{transform:e.style.transform,opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg)`,opacity:0}],{duration:900+Math.random()*900,easing:'cubic-bezier(.15,.8,.3,1)'});
+    setTimeout(()=>e.remove(),1900);
+  }
+}
+
+function playAirSuccessSound(){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext, ac=new AC();
+    const notes=[523.25,659.25,783.99];
+    notes.forEach((f,i)=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(.0001,ac.currentTime+i*.09);
+      g.gain.exponentialRampToValueAtTime(.16,ac.currentTime+i*.09+.02);
+      g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+i*.09+.18);
+      o.connect(g);g.connect(ac.destination);o.start(ac.currentTime+i*.09);o.stop(ac.currentTime+i*.09+.2);
+    });
+  }catch(e){}
+}
+
+function playAirApplause(){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext,ac=new AC();
+    const duration=1.7, buffer=ac.createBuffer(1,ac.sampleRate*duration,ac.sampleRate);
+    const data=buffer.getChannelData(0);
+    for(let i=0;i<data.length;i++){
+      const t=i/ac.sampleRate;
+      const envelope=Math.max(0,1-t/duration);
+      data[i]=(Math.random()*2-1)*envelope*(.22+.15*Math.sin(t*28));
+    }
+    const src=ac.createBufferSource(),g=ac.createGain();src.buffer=buffer;g.gain.value=.55;src.connect(g);g.connect(ac.destination);src.start();
+  }catch(e){}
+}
+
+function launchWordLights(){
+  const colors=['#ff9228','#ef3f91','#159ee8','#20bd68','#783ff0','#ffd43b'];
+  for(let i=0;i<28;i++){
+    const beam=document.createElement('div');
+    const left=Math.random()*100;
+    beam.style.cssText=`position:fixed;z-index:9998;left:${left}vw;bottom:-20vh;width:6vw;height:70vh;background:linear-gradient(to top,${colors[i%colors.length]},transparent);opacity:0;pointer-events:none;transform-origin:bottom center;filter:blur(2px)`;
+    document.body.appendChild(beam);
+    beam.animate([{transform:`rotate(${(Math.random()-.5)*20}deg)`,opacity:0},{opacity:.35,offset:.35},{opacity:0}],{duration:1100+Math.random()*900,easing:'ease-out'});
+    setTimeout(()=>beam.remove(),2200);
+  }
+}
+
+function showAirReplay(avg,stars){
+  const overlay=$('airReplayOverlay'), canvas=$('airReplayCanvas'), ctx=canvas.getContext('2d');
+  const title=$('airReplayTitle'), wordEl=$('airReplayWord');
+  const starsEl=$('airReplayStars'), suspense=$('airReplaySuspense'), scoreEl=$('airReplayScore');
+
+  overlay.style.display='flex';
+  title.textContent='🎉 WORD COMPLETE!';
+  wordEl.textContent=airCurrentWord;
+  starsEl.innerHTML='';
+  scoreEl.textContent='';
+  suspense.textContent='Calculating your stars...';
+
+  // Start with five dimmed stars for suspense.
+  for(let i=0;i<5;i++){
+    const s=document.createElement('span');
+    s.className='air-star';
+    s.textContent='⭐';
+    starsEl.appendChild(s);
+  }
+
+  ctx.fillStyle='#172033';ctx.fillRect(0,0,640,480);
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=2;ctx.setLineDash([8,8]);
+  const margin=42,w=(640-margin*2)/Math.max(1,airCurrentWord.length);
+  for(let i=1;i<airCurrentWord.length;i++){ctx.beginPath();ctx.moveTo(margin+i*w,0);ctx.lineTo(margin+i*w,480);ctx.stroke();}
+  ctx.setLineDash([]);
+  ctx.font='bold 190px Trebuchet MS';ctx.textAlign='center';ctx.textBaseline='middle';
+  airCompletedLetters.forEach((item,i)=>{
+    ctx.strokeStyle='rgba(255,255,255,.12)';ctx.lineWidth=7;
+    ctx.strokeText(item.letter,margin+i*w+w/2,240);
+  });
+
+  // Replay the actual handwriting.
+  let li=0,si=0,pi=1;
+  function frame(){
+    if(li>=airCompletedLetters.length)return;
+    const item=airCompletedLetters[li],st=item.strokes[si];
+    if(st&&st.length){
+      ctx.strokeStyle='#ef3f91';ctx.lineWidth=12;ctx.lineCap='round';ctx.lineJoin='round';
+      if(pi===1){ctx.beginPath();ctx.moveTo(st[0].x,st[0].y);}
+      const limit=Math.min(st.length,pi+3);
+      while(pi<limit){ctx.lineTo(st[pi].x,st[pi].y);pi++;}
+      ctx.stroke();
+      if(pi>=st.length){si++;pi=1;}
+    }else si++;
+    if(si>=item.strokes.length){li++;si=0;pi=1;}
+    requestAnimationFrame(frame);
+  }
+  setTimeout(frame,260);
+
+  // Suspense, then reveal stars one by one.
+  setTimeout(()=>{
+    suspense.textContent='Let’s see how you did...';
+  },700);
+
+  setTimeout(()=>{
+    const all=[...starsEl.querySelectorAll('.air-star')];
+    let revealed=0;
+    const revealNext=()=>{
+      if(revealed<stars){
+        all[revealed].classList.add('revealed');
+        revealed++;
+        playStarRevealSound(revealed,stars);
+        setTimeout(revealNext,430);
+      }else{
+        suspense.textContent=stars===5?'PERFECT PERFORMANCE! ✨':stars>=4?'AMAZING JOB! 🎉':stars>=3?'GREAT WORK! 👏':'NICE TRY! KEEP PRACTICING! 💪';
+        scoreEl.textContent=`${stars} / 5 STARS`;
+        launchResultCelebration(stars);
+      }
+    };
+    revealNext();
+  },1400);
+}
+
+function playStarRevealSound(n,total){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext,ac=new AC();
+    const o=ac.createOscillator(),g=ac.createGain();
+    o.type='triangle';o.frequency.value=420+n*115+(total>=5?30:0);
+    g.gain.setValueAtTime(.0001,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(.12,ac.currentTime+.025);
+    g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+.25);
+    o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.27);
+  }catch(e){}
+}
+
+function launchResultCelebration(stars){
+  // Better result = bigger visual and audio celebration.
+  if(stars>=2) launchConfetti(45*stars);
+  if(stars>=3) launchWordLights();
+  if(stars>=4) setTimeout(()=>launchWordLights(),350);
+  if(stars===5){
+    launchConfetti(180);
+    setTimeout(()=>launchWordLights(),180);
+    setTimeout(()=>launchConfetti(140),520);
+  }
+
+  if(stars>=4) playAirApplause();
+  if(stars===5) setTimeout(playAirApplause,450);
+}
+
+
+function closeAirReplay(){
+  $('airReplayOverlay').style.display='none';
+  nextAirWord();
+}
+
+function nextAirWord(){
+  // Choosing a new word always returns to structured Word Mode.
+  if(airFreeDrawing){
+    // Preserve the Free Drawing board; it is not part of the word game state.
+    airFreeStrokes=airStrokes;
+    airStrokes=[];
+    endAirStroke();
+    airFreeDrawing=false;
+    const btn=$('airFreeDrawBtn'); if(btn){btn.innerHTML='🎨 FREE DRAWING';btn.style.background='var(--green)';}
+    if($('airFreeModeBadge'))$('airFreeModeBadge').style.display='none';
+    if($('airFreePalette'))$('airFreePalette').style.display='none';
+    if($('airCornerProgress'))$('airCornerProgress').style.display='block';
+    if($('airClearBtn'))$('airClearBtn').innerHTML='🗑️ CLEAR LETTER';
+    if($('airCurrentWordHint'))$('airCurrentWordHint').classList.remove('free-mode');
+  }
+  const randomHab=habitats[Math.floor(Math.random()*habitats.length)];
+  airScoreCache.time=0;airCurrentWord=randomHab.name.toUpperCase();
+  const wordHint=$('airCurrentWordHint');
+  if(wordHint){
+    wordHint.textContent=airCurrentWord;
+    wordHint.classList.remove('free-mode');
+  }airCurrentLetterIndex=0;airWordTotalScore=0;airStrokes=[];airPaused=false;airCompletedLetters=[];airAdvancing=false;
+  clearTimeout(airAutoAdvanceTimer);airAutoAdvanceTimer=null;redrawAirStrokes();
+  $('airFeedback').innerHTML='';$('airFeedback').className='logic-feedback';
+  $('airStars').style.display='none';$('airStars').innerHTML=''; if($('airOkGesture')){$('airOkGesture').style.display='none';$('airOkGesture').innerHTML='🖐️ HOLD OPEN HAND HERE<br><strong>OK ✓</strong>';}const pauseBtn=$('airPauseBtn'); if(pauseBtn){pauseBtn.innerHTML='⏸️ PAUSE';pauseBtn.style.background='var(--blue)';}
+  updateAirWordUI();drawAirGuides();updateAirLiveScore(true);setAirStatus('ready');
+}
+
+function updateAirWordUI(){
+  $('airWordPrompt').innerHTML=[...airCurrentWord].map((ch,i)=>`<span class="air-letter-box ${i<airCurrentLetterIndex?'done':i===airCurrentLetterIndex?'active':''}">${ch}</span>`).join('');
+}
+
+function drawAirGuides(){
+  if(!guideCtx)return;
+  if(airFreeDrawing){guideCtx.clearRect(0,0,640,480);return;}
+  if(!airCurrentWord)return;guideCtx.clearRect(0,0,640,480);
+  const total=airCurrentWord.length, margin=42, usable=640-margin*2, w=usable/total;
+  if(airCurrentLetterIndex<total){
+    const c=airCell(),letter=airCurrentWord[airCurrentLetterIndex],fontSize=Math.min(260,w*1.3);
+    guideCtx.fillStyle='rgba(255,255,255,.15)';guideCtx.fillRect(c.start,0,w,480);
+    guideCtx.font=`bold ${fontSize}px "Trebuchet MS", Arial, sans-serif`;guideCtx.textAlign='center';guideCtx.textBaseline='middle';
+    guideCtx.strokeStyle='rgba(255,255,255,.9)';guideCtx.lineWidth=10;guideCtx.strokeText(letter,c.cx,c.cy);
+    guideCtx.fillStyle='rgba(255,255,255,.18)';guideCtx.fillText(letter,c.cx,c.cy);
+  }
+  guideCtx.strokeStyle='rgba(255,255,255,.35)';guideCtx.lineWidth=2;guideCtx.setLineDash([10,10]);
+  for(let i=1;i<total;i++){guideCtx.beginPath();guideCtx.moveTo(margin+i*w,0);guideCtx.lineTo(margin+i*w,480);guideCtx.stroke();}
+  guideCtx.setLineDash([]);
+}
+
+// Backwards compatibility for any old event handlers.
+function checkAirLetter(){ const r=updateAirLiveScore(true); if(r.score>=68) completeAirLetter(r.score); }
+
 
 // GAME 6: LISTEN & REPEAT LOGIC
 let repeatAnimal = null;
